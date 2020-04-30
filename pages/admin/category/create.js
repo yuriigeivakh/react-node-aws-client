@@ -51,7 +51,7 @@ const Create = ({ user, token }) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const { name, content, image } = state;
+        const { name, image } = state;
         setState({ ...state, buttonText: 'Creating' });
         try {
             const response = await axios.post(`${API}/category`, { name, content, image }, {
