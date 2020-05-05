@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Resizer from 'react-image-file-resizer';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
 import { API } from '../../../config';
 import { showSuccessMessage, showErrorMessage } from '../../../helpers/alerts';
 import Layout from '../../../components/Layout';
@@ -16,60 +15,74 @@ const Create = ({ user, token }) => {
         error: '',
         success: '',
         buttonText: 'Create',
-        image: '',
+        image: ''
     });
-    const [imageUploadButtonName, setImageUploadButtonName] = useState('Upload image');
     const [content, setContent] = useState('');
+    const [imageUploadButtonName, setImageUploadButtonName] = useState('Upload image');
 
-    const { name, success, error, buttonText } = state;
-
-    const handleContent = e => {
-        setContent(e);
-        setState({...state, success: '', error: ''});
-    }
-
-    const handleImage = e => {
-        const image = e.target.files[0];
-        setImageUploadButtonName(image.name);
-        Resizer.imageFileResizer(
-            image, 
-            300,
-            300,
-            'JPEG',
-            100,
-            0,
-            uri => {
-                setState({...state, image: uri, success: '', error: ''});
-            },
-            'base64',
-        ); 
-    }
+    const { name, success, error, image, buttonText, imageUploadText } = state;
 
     const handleChange = name => e => {
-        setState({ ...state, [name]: e.target.value, error: '', success: '', });
+        setState({ ...state, [name]: e.target.value, error: '', success: '' });
+    };
+
+    const handleContent = e => {
+        console.log(e);
+        setContent(e);
+        setState({ ...state, success: '', error: '' });
+    };
+
+    const handleImage = event => {
+        let fileInput = false;
+        if (event.target.files[0]) {
+            fileInput = true;
+        }
+        setImageUploadButtonName(event.target.files[0].name);
+        if (fileInput) {
+            Resizer.imageFileResizer(
+                event.target.files[0],
+                300,
+                300,
+                'JPEG',
+                100,
+                0,
+                uri => {
+                    // console.log(uri);
+                    setState({ ...state, image: uri, success: '', error: '' });
+                },
+                'base64'
+            );
+        }
     };
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const { name, image } = state;
         setState({ ...state, buttonText: 'Creating' });
+        console.table({ name, content, image });
         try {
-            const response = await axios.post(`${API}/category`, { name, content, image }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
+            const response = await axios.post(
+                `${API}/category`,
+                { name, content, image },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 }
-            });
+            );
+            console.log('CATEGORY CREATE RESPONSE', response);
             setImageUploadButtonName('Upload image');
             setState({
                 ...state,
                 name: '',
                 content: '',
+                formData: '',
                 buttonText: 'Created',
+                imageUploadText: 'Upload image',
                 success: `${response.data.name} is created`
             });
         } catch (error) {
             console.log('CATEGORY CREATE ERROR', error);
-            setState({ ...state, name: '', buttonText: 'Create', error: error.response.data.error });
+            setState({ ...state, buttonText: 'Create', error: error.response.data.error });
         }
     };
 
@@ -81,19 +94,19 @@ const Create = ({ user, token }) => {
             </div>
             <div className="form-group">
                 <label className="text-muted">Content</label>
-                {/* <textarea onChange={handleChange('content')} value={content} className="form-control" required /> */}
-                <ReactQuill onChange={handleContent} value={content} className="form-control" placeholder="Write something..." required theme="bubble" />
+                <ReactQuill
+                    value={content}
+                    onChange={handleContent}
+                    placeholder="Write something..."
+                    theme="bubble"
+                    className="pb-5 mb-3"
+                    style={{ border: '1px solid #666' }}
+                />
             </div>
             <div className="form-group">
                 <label className="btn btn-outline-secondary">
                     {imageUploadButtonName}
-                    <input
-                        onChange={handleImage}
-                        type="file"
-                        accept="image/*"
-                        className="form-control"
-                        hidden
-                    />
+                    <input onChange={handleImage} type="file" accept="image/*" className="form-control" hidden />
                 </label>
             </div>
             <div>

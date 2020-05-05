@@ -24,13 +24,35 @@ const Read = ({ user, token }) => {
         setState({ ...state, categories: response.data });
     };
 
+    const confirmDelete = (e, slug) => {
+        e.preventDefault();
+        let answer = window.confirm('Are you sure you want to delete?');
+        if (answer) {
+            handleDelete(slug);
+        }
+    };
+
+    const handleDelete = async slug => {
+        try {
+            const response = await axios.delete(`${API}/category/${slug}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log('CATEGORY DELETE SUCCESS ', response);
+            loadCategories();
+        } catch (error) {
+            console.log('CATEGORY DELETE ', error);
+        }
+    };
+
     const listCategories = () =>
         categories.map((c, i) => (
-            <Link href={`/links/${c.slug}`}>
+            <Link key={i} href={`/links/${c.slug}`}>
                 <a style={{ border: '1px solid red' }} className="bg-light p-3 col-md-6">
                     <div>
                         <div className="row">
-                            <div className="col-md-4">
+                            <div className="col-md-3">
                                 <img
                                     src={c.image && c.image.url}
                                     alt={c.name}
@@ -38,8 +60,20 @@ const Read = ({ user, token }) => {
                                     className="pr-3"
                                 />
                             </div>
-                            <div className="col-md-8">
+                            <div className="col-md-6">
                                 <h3>{c.name}</h3>
+                            </div>
+                            <div className="col-md-3">
+                                <Link href={`/admin/category/${c.slug}`}>
+                                    <button className="btn btn-sm btn-outline-success btn-block mb-1">Update</button>
+                                </Link>
+
+                                <button
+                                    onClick={e => confirmDelete(e, c.slug)}
+                                    className="btn btn-sm btn-outline-danger btn-block"
+                                >
+                                    Delete
+                                </button>
                             </div>
                         </div>
                     </div>
