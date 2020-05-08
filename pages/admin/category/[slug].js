@@ -79,7 +79,7 @@ const Update = ({ oldCategory, token }) => {
             setContent(response.data.content);
         } catch (error) {
             console.log('CATEGORY CREATE ERROR', error);
-            setState({ ...state, buttonText: 'Create', error: error.response.data.error });
+            setState({ ...state, buttonText: 'Create', error: error.response.data });
         }
     };
 

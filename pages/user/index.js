@@ -1,14 +1,9 @@
-const axios = require('axios');
 import Layout from '../../components/Layout';
+import axios from 'axios';
+import { API } from '../../config';
+import { getCookie } from '../../helpers/auth';
 import withUser from '../withUser';
 
-const User = ({todos}) => <Layout>User {JSON.stringify(todos[0])}</Layout>;
-
-User.getInitialProps = async () => {
-    const { data } = await axios('https://jsonplaceholder.typicode.com/todos');
-    return {
-        todos: data,
-    }
-}
+const User = ({ user, userLinks }) => <Layout>{JSON.stringify(userLinks)}</Layout>;
 
 export default withUser(User);
