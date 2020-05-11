@@ -70,7 +70,7 @@ const Links = ({ token, links, totalLinks, linksLimit, linkSkip }) => {
                     <span onClick={e => confirmDelete(e, l._id)} className="badge text-danger pull-right">
                         Delete
                     </span>
-                    <Link href={`/admin/link/${l._id}`}>
+                    <Link href={`/user/link/${l._id}`}>
                         <a>
                             <span className="badge text-warning pull-right">Update</span>
                         </a>
@@ -93,8 +93,6 @@ const Links = ({ token, links, totalLinks, linksLimit, linkSkip }) => {
         );
 
         setAllLinks([...allLinks, ...response.data]);
-        // console.log('allLinks', allLinks);
-        // console.log('response.data.links.length', response.data.links.length);
         setSize(response.data.length);
         setSkip(toSkip);
     };
