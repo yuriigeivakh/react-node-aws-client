@@ -84,3 +84,9 @@ export const logout = () => {
     removeLocalStorage('user');
     Router.push('/login');
 };
+
+export const updateUser = (user) => {
+    if (process.browser && localStorage.getItem('user')) {
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+};

@@ -4,7 +4,7 @@ import Router from 'next/router';
 import axios from 'axios';
 import { showSuccessMessage, showErrorMessage } from '../../../helpers/alerts';
 import { API } from '../../../config';
-import { isAuth } from '../../../helpers/auth';
+import { updateUser } from '../../../helpers/auth';
 import withUser from '../../withUser';
 
 const Profile = ({ user, token }) => {
@@ -71,7 +71,7 @@ const Profile = ({ user, token }) => {
         e.preventDefault();
         setState({ ...state, buttonText: 'Updating...' });
         try {
-            const response = await axios.put(
+            const { data } = await axios.put(
                 `${API}/user`,
                 {
                     name,
@@ -84,7 +84,7 @@ const Profile = ({ user, token }) => {
                     }
                 }
             );
-            console.log(response);
+            await updateUser(data);
             setState({
                 ...state,
                 buttonText: 'Updated',
