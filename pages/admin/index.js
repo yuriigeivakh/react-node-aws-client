@@ -24,6 +24,11 @@ const Admin = ({ user }) => (
                             <a className="nav-link">Link</a>
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link href="/user/profile/update">
+                            <a className="nav link">Update profile</a>
+                        </Link>
+                    </li>
                 </ul>
             </div>
             <div className="col-md-8"></div>
