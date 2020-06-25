@@ -34,12 +34,10 @@ const Login = () => {
                 email,
                 password
             });
-            // console.log(response); // data > token / user
             authenticate(response, () =>
                 isAuth() && isAuth().role === 'admin' ? Router.push('/admin') : Router.push('/user')
             );
         } catch (error) {
-            console.log(error);
             setState({ ...state, buttonText: 'Login', error: error.response.data.error });
         }
     };

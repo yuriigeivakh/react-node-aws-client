@@ -39,11 +39,8 @@ const Read = ({ user, token }) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log('CATEGORY DELETE SUCCESS ', response);
             loadCategories();
-        } catch (error) {
-            console.log('CATEGORY DELETE ', error);
-        }
+        } catch (error) {}
     };
 
     const listCategories = () =>

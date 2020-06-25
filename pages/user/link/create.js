@@ -42,7 +42,6 @@ const Create = ({ token }) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        // console.table({ title, url, categories, type, medium });
         try {
             const response = await axios.post(
                 `${API}/link`,
@@ -65,7 +64,6 @@ const Create = ({ token }) => {
                 medium: ''
             });
         } catch (error) {
-            console.log('LINK SUBMIT ERROR', error);
             setState({ ...state, error: error.response.data.error });
         }
     };
@@ -152,7 +150,6 @@ const Create = ({ token }) => {
         } else {
             all.splice(clickedCategory, 1);
         }
-        console.log('all >> categories', all);
         setState({ ...state, categories: all, success: '', error: '' });
     };
 

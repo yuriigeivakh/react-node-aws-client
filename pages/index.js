@@ -14,7 +14,6 @@ const Home = ({ categories }) => {
 
     const loadPopular = async () => {
         const { data } = await axios.get(`${API}/link/popular`);
-        console.log(data)
         setPopular(data);
     };
 

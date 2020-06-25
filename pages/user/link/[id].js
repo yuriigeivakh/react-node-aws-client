@@ -43,7 +43,6 @@ const Update = ({ oldLink, token }) => {
     const handleSubmit = async e => {
         e.preventDefault();
         // use update link based on logged in user role
-        console.log('isAuth()', isAuth())
         let dynamicUpdateUrl;
         if (isAuth() && isAuth().role === 'admin') {
             dynamicUpdateUrl = `${API}/link/admin/${oldLink._id}`;
@@ -63,7 +62,6 @@ const Update = ({ oldLink, token }) => {
             );
             setState({ ...state, success: 'Link is updated' });
         } catch (error) {
-            console.log('LINK SUBMIT ERROR', error);
             setState({ ...state, error: error.response.data.error });
         }
     };
@@ -150,7 +148,6 @@ const Update = ({ oldLink, token }) => {
         } else {
             all.splice(clickedCategory, 1);
         }
-        console.log('all >> categories', all);
         setState({ ...state, categories: all, success: '', error: '' });
     };
 

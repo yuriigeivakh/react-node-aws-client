@@ -41,7 +41,6 @@ const Profile = ({ user, token }) => {
         } else {
             all.splice(clickedCategory, 1);
         }
-        console.log('all >> categories', all);
         setState({ ...state, categories: all, success: '', error: '' });
     };
 
@@ -91,7 +90,6 @@ const Profile = ({ user, token }) => {
                 success: 'Profile updated successfully'
             });
         } catch (error) {
-            console.log(error);
             setState({ ...state, buttonText: 'Update', error: error.response.data.error });
         }
     };

@@ -18,7 +18,6 @@ const ResetPassword = ({ router }) => {
     const { name, token, newPassword, buttonText, success, error } = state;
 
     useEffect(() => {
-        console.log(router);
         const decoded = jwt.decode(router.query.id);
         if (decoded) setState({ ...state, name: decoded.name, token: router.query.id });
     }, [router]);
@@ -29,11 +28,9 @@ const ResetPassword = ({ router }) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        // console.log('post email to ', email);
         setState({ ...state, buttonText: 'Sending' });
         try {
             const response = await axios.put(`${API}/reset-password`, { resetPasswordLink: token, newPassword });
-            // console.log('FORGOT PASSWORD', response);
             setState({
                 ...state,
                 newPassword: '',
@@ -41,7 +38,6 @@ const ResetPassword = ({ router }) => {
                 success: response.data.message
             });
         } catch (error) {
-            console.log('RESET PW ERROR', error);
             setState({
                 ...state,
                 buttonText: 'Forgot Password',

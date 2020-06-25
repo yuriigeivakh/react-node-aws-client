@@ -20,10 +20,8 @@ const ForgotPassword = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        // console.log('post email to ', email);
         try {
             const response = await axios.put(`${API}/forgot-password`, { email });
-            // console.log('FORGOT PASSWORD', response);
             setState({
                 ...state,
                 email: '',
@@ -31,7 +29,6 @@ const ForgotPassword = () => {
                 success: response.data.message
             });
         } catch (error) {
-            console.log('FORGOT PW ERROR', error);
             setState({
                 ...state,
                 buttonText: 'Forgot Password',

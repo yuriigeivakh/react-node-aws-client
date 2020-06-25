@@ -10,7 +10,6 @@ import withUser from '../withUser';
 const User = ({ user, userLinks, token }) => {
     const confirmDelete = (e, id) => {
         e.preventDefault();
-        // console.log('delete > ', slug);
         let answer = window.confirm('Are you sure you want to delete?');
         if (answer) {
             handleDelete(id);
@@ -18,18 +17,14 @@ const User = ({ user, userLinks, token }) => {
     };
 
     const handleDelete = async id => {
-        console.log('delete link > ', id);
         try {
             const response = await axios.delete(`${API}/link/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log('LINK DELETE SUCCESS ', response);
             Router.replace('/user');
-        } catch (error) {
-            console.log('LINK DELETE ', error);
-        }
+        } catch (error) {}
     };
 
     const listOfLinks = () =>

@@ -28,7 +28,6 @@ const Update = ({ oldCategory, token }) => {
     };
 
     const handleContent = e => {
-        console.log(e);
         setContent(e);
         setState({ ...state, success: '', error: '' });
     };
@@ -48,7 +47,6 @@ const Update = ({ oldCategory, token }) => {
                 100,
                 0,
                 uri => {
-                    // console.log(uri);
                     setState({ ...state, image: uri, success: '', error: '' });
                 },
                 'base64'
@@ -59,7 +57,6 @@ const Update = ({ oldCategory, token }) => {
     const handleSubmit = async e => {
         e.preventDefault();
         setState({ ...state, buttonText: 'Updating' });
-        console.table({ name, content, image });
         try {
             const response = await axios.put(
                 `${API}/category/${oldCategory.slug}`,
@@ -70,7 +67,6 @@ const Update = ({ oldCategory, token }) => {
                     }
                 }
             );
-            console.log('CATEGORY UPDATE RESPONSE', response);
             setState({
                 ...state,
                 imagePreview: response.data.image.url,
@@ -78,7 +74,6 @@ const Update = ({ oldCategory, token }) => {
             });
             setContent(response.data.content);
         } catch (error) {
-            console.log('CATEGORY CREATE ERROR', error);
             setState({ ...state, buttonText: 'Create', error: error.response.data });
         }
     };

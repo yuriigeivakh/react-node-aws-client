@@ -36,7 +36,6 @@ const Links = ({ query, category, links, totalLinks, linksLimit, linkSkip }) => 
 
     const loadPopular = async () => {
         const response = await axios.get(`${API}/link/popular/${category.slug}`);
-        // console.log(response);
         setPopular(response.data);
     };
 
@@ -117,8 +116,6 @@ const Links = ({ query, category, links, totalLinks, linksLimit, linkSkip }) => 
         let toSkip = skip + limit;
         const response = await axios.post(`${API}/category/${query.slug}`, { skip: toSkip, limit });
         setAllLinks([...allLinks, ...response.data.links]);
-        console.log('allLinks', allLinks);
-        console.log('response.data.links.length', response.data.links.length);
         setSize(response.data.links.length);
         setSkip(toSkip);
     };

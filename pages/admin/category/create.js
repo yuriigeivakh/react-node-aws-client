@@ -27,7 +27,6 @@ const Create = ({ user, token }) => {
     };
 
     const handleContent = e => {
-        console.log(e);
         setContent(e);
         setState({ ...state, success: '', error: '' });
     };
@@ -47,7 +46,6 @@ const Create = ({ user, token }) => {
                 100,
                 0,
                 uri => {
-                    // console.log(uri);
                     setState({ ...state, image: uri, success: '', error: '' });
                 },
                 'base64'
@@ -58,7 +56,6 @@ const Create = ({ user, token }) => {
     const handleSubmit = async e => {
         e.preventDefault();
         setState({ ...state, buttonText: 'Creating' });
-        console.table({ name, content, image });
         try {
             const response = await axios.post(
                 `${API}/category`,
@@ -69,7 +66,6 @@ const Create = ({ user, token }) => {
                     }
                 }
             );
-            console.log('CATEGORY CREATE RESPONSE', response);
             setImageUploadButtonName('Upload image');
             setContent('');
             setState({
@@ -81,7 +77,6 @@ const Create = ({ user, token }) => {
                 success: `${response.data.name} is created`
             });
         } catch (error) {
-            console.log('CATEGORY CREATE ERROR', error);
             setState({ ...state, buttonText: 'Create', error: error.response.data.error });
         }
     };

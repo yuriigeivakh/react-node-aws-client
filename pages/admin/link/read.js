@@ -17,7 +17,6 @@ const Links = ({ token, links, totalLinks, linksLimit, linkSkip }) => {
 
     const confirmDelete = (e, id) => {
         e.preventDefault();
-        // console.log('delete > ', slug);
         let answer = window.confirm('Are you sure you want to delete?');
         if (answer) {
             handleDelete(id);
@@ -31,11 +30,8 @@ const Links = ({ token, links, totalLinks, linksLimit, linkSkip }) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log('LINK DELETE SUCCESS ', response);
             process.browser && window.location.reload();
-        } catch (error) {
-            console.log('LINK DELETE ', error);
-        }
+        } catch (error) {}
     };
 
     const listOfLinks = () =>
